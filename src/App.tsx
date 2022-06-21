@@ -1,11 +1,18 @@
 import * as React from 'react';
-import { ChakraProvider, theme } from '@chakra-ui/react';
-import { Header } from './components/Header';
-import { Recipe } from './components/RecipeInfo';
+import { ChakraProvider } from '@chakra-ui/react';
+import Header from './components/header/Header';
+import RecipeInfo from './components/recipe-info/RecipeInfo';
+import RecipeForm from './components/form/RecipeForm';
+import { theme } from './theme';
+import { createApi } from 'unsplash-js';
+import { accessKey } from './config';
+
+export const api = createApi({ accessKey });
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Header />
-    <Recipe />
+    <RecipeInfo />
+    {/* <RecipeForm /> */}
   </ChakraProvider>
 );
