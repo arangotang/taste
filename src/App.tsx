@@ -6,6 +6,7 @@ import RecipeForm from './components/form/RecipeForm';
 import { theme } from './theme';
 import { createApi } from 'unsplash-js';
 import { accessKey } from './config';
+import HomePage from './components/home/HomePage';
 
 export const api = createApi({ accessKey });
 
@@ -13,6 +14,7 @@ export const App = () => (
   <ChakraProvider theme={theme}>
     <Header />
     {/* <RecipeInfo /> */}
-    <RecipeForm />
+    {/* <RecipeForm /> */}
+    <HomePage />
   </ChakraProvider>
 );

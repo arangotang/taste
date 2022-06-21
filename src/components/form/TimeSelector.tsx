@@ -8,7 +8,7 @@ import {
   NumberDecrementStepper,
   FormHelperText,
 } from '@chakra-ui/react';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 export enum TimeTypes {
   Prep = 'prep',
