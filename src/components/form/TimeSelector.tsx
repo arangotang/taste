@@ -8,7 +8,7 @@ import {
   NumberDecrementStepper,
   FormHelperText,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 export enum TimeTypes {
   Prep = 'prep',
@@ -18,14 +18,22 @@ export enum TimeTypes {
 
 interface Props {
   type: TimeTypes | 'servings';
+  value: number;
+  setValue: Dispatch<SetStateAction<number>>;
 }
 
 const TimeSelector = (props: Props) => {
-  const { type } = props;
-  const [value, setValue] = useState(0);
+  const { type, value, setValue } = props;
 
-  const handleChange = (_: string, newValue: number) => {
-    setValue(newValue);
+  const handleChange = (valAsString: string, valAsNum: number) => {
+    if (valAsString) {
+      let newVal = Number(valAsString);
+      if (isNaN(newVal)) newVal = 0;
+      setValue(newVal);
+    } else {
+      if (isNaN(valAsNum)) valAsNum = 0;
+      setValue(valAsNum);
+    }
   };
 
   return (

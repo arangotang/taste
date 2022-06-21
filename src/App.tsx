@@ -12,7 +12,7 @@ export const api = createApi({ accessKey });
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Header />
-    <RecipeInfo />
-    {/* <RecipeForm /> */}
+    {/* <RecipeInfo /> */}
+    <RecipeForm />
   </ChakraProvider>
 );

@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import axios from 'axios';
 import {
   Input,
   Textarea,
@@ -18,6 +19,7 @@ import ImageSelector from './ImageSelector';
 import TimeSelector, { TimeTypes } from './TimeSelector';
 import { nanoid } from 'nanoid';
 import FormStatus from './FormStatus';
+import { API_URL } from '../../config';
 
 const RecipeForm = () => {
   const [title, setTitle] = useState('');
@@ -26,6 +28,10 @@ const RecipeForm = () => {
   const [ingredients, setIngredients] = useState([{ value: '', id: nanoid() }]);
   const [steps, setSteps] = useState([{ value: '', id: nanoid() }]);
   const [selectedUrl, setSelectedUrl] = useState<string>('');
+  const [prepTime, setPrepTime] = useState<number>(0);
+  const [cookTime, setCookTime] = useState<number>(0);
+  const [chillTime, setChillTime] = useState<number>(0);
+  const [servings, setServings] = useState<number>(0);
 
   const handleChange = (e: { target: { value: string; name: string } }) => {
     const newVal = e.target.value;
@@ -65,6 +71,26 @@ const RecipeForm = () => {
     steps.length,
     title.length,
   ]);
+
+  const handleSubmit = () => {
+    if (canSubmit) {
+      const recipeData = {
+        title,
+        cuisine,
+        description,
+        ingredients: ingredients.map((ingredient) => ingredient.value),
+        steps: steps.map((step) => step.value),
+        image: selectedUrl,
+        times: {
+          prep: prepTime,
+          cook: cookTime,
+          chill: chillTime,
+          servings,
+        },
+      };
+      axios.post(API_URL, recipeData);
+    }
+  };
 
   return (
     <Box style={{ position: 'relative' }}>
@@ -118,10 +144,26 @@ const RecipeForm = () => {
           </FormControl>
 
           <Wrap justify="space-between" mb="2rem">
-            <TimeSelector type={TimeTypes.Prep} />
-            <TimeSelector type={TimeTypes.Cook} />
-            <TimeSelector type={TimeTypes.Chill} />
-            <TimeSelector type="servings" />
+            <TimeSelector
+              type={TimeTypes.Prep}
+              value={prepTime}
+              setValue={setPrepTime}
+            />
+            <TimeSelector
+              type={TimeTypes.Cook}
+              value={cookTime}
+              setValue={setCookTime}
+            />
+            <TimeSelector
+              type={TimeTypes.Chill}
+              value={chillTime}
+              setValue={setChillTime}
+            />
+            <TimeSelector
+              type="servings"
+              value={servings}
+              setValue={setServings}
+            />
           </Wrap>
 
           <ItemList
@@ -149,7 +191,11 @@ const RecipeForm = () => {
               <Button colorScheme="red" variant="outline">
                 Cancel
               </Button>
-              <Button colorScheme="teal" isDisabled={!canSubmit}>
+              <Button
+                colorScheme="teal"
+                isDisabled={!canSubmit}
+                onClick={handleSubmit}
+              >
                 Submit
               </Button>
             </Flex>
