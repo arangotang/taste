@@ -70,7 +70,7 @@ const ImageSelector = (props: Props) => {
 
   const handleSearch = () => {
     api.search
-      .getPhotos({ query: searchText, orientation: 'landscape', perPage: 9 })
+      .getPhotos({ query: searchText, perPage: 9 })
       .then((result) => {
         if (
           result.response !== undefined &&

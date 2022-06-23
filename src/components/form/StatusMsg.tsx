@@ -23,11 +23,11 @@ const StatusMsg = (props: Props) => {
   return (
     <Flex alignItems="center" gap="0.8em">
       {isPassing ? (
-        <CheckCircleIcon color="green.400" />
+        <CheckCircleIcon color="teal.500" />
       ) : (
         <WarningIcon color="red.400" />
       )}
-      <Text color={isPassing ? 'green.400' : 'red.400'}>{msgText}</Text>
+      <Text color={isPassing ? 'teal.500' : 'red.400'}>{msgText}</Text>
     </Flex>
   );
 };

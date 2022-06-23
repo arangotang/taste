@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, Flex, useDisclosure, Collapse } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
 import NavLinks from './NavLinks';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
@@ -30,22 +31,31 @@ const Header = () => {
     };
   }, [handleNavigation]);
 
+  let navigate = useNavigate();
+
   return (
     <Collapse in={isOpen} animateOpacity>
       <Flex
         bg="#E63946"
         color="#F1FAEE"
-        justifyContent="space-between"
+        justifyContent="flex-start"
         alignItems="center"
         padding="0.4rem 1rem"
         position="fixed"
         width="100%"
         zIndex="3"
       >
-        <Text as="b" fontSize="3xl">
+        <Text
+          as="b"
+          fontSize="3xl"
+          transition="0.3s"
+          _hover={{ textDecoration: 'underline', cursor: 'pointer' }}
+          onClick={() => {
+            navigate('/');
+          }}
+        >
           Taste.
         </Text>
-        <NavLinks />
       </Flex>
     </Collapse>
   );

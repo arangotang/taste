@@ -38,9 +38,9 @@ const TimeSelector = (props: Props) => {
 
   return (
     <FormControl w="120px">
-      <FormLabel as={type === 'servings' ? 'i' : 'label'}>{`${
-        type[0].toUpperCase() + type.slice(1)
-      }${type === 'servings' ? '' : ' Time'}`}</FormLabel>
+      <FormLabel as="label">{`${type[0].toUpperCase() + type.slice(1)}${
+        type === 'servings' ? '' : ' Time'
+      }`}</FormLabel>
       <NumberInput min={0} size="lg" value={value} onChange={handleChange}>
         <NumberInputField id={`${type}-count`} />
         <NumberInputStepper>

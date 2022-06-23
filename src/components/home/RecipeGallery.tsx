@@ -1,6 +1,6 @@
-import { Flex, Image } from '@chakra-ui/react';
-import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Button, Flex } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -11,47 +11,47 @@ import './styles.css';
 import { Navigation, Pagination } from 'swiper';
 import { nanoid } from 'nanoid';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
+import RecipeCard from './RecipeCard';
+import axios from 'axios';
+import { API_URL } from '../../config';
 
 const RecipeGallery = () => {
+  const [galleryItems, setGalleryItems] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(API_URL)
+      .then(({ data }) => {
+        setGalleryItems(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const width = useWindowDimensions();
-  const demoImg = (
-    <Image
-      src="https://images.unsplash.com/photo-1515968270336-3e94abcdac1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
-      w="300px"
-      h="360px"
-      objectFit="cover"
-      borderRadius="8px"
-      transition="0.3s"
-      _hover={{ cursor: 'pointer' }}
-    />
-  );
 
   const slidesPerWidth =
-    Math.floor(width / 350) === 0 ? 1 : Math.floor(width / 350);
+    Math.floor(width / 400) === 0 ? 1 : Math.floor(width / 400);
+
+  const galleryEls = galleryItems.map(
+    (item: { image: string; title: string; id: string }) => (
+      <SwiperSlide key={nanoid()}>
+        <RecipeCard url={item.image} recipeName={item.title} id={item.id} />
+      </SwiperSlide>
+    )
+  );
 
   return (
-    <Flex m="1rem 0">
+    <Flex m="5rem 1rem 8rem 1rem" userSelect="none">
       <Swiper
         slidesPerView={slidesPerWidth}
-        slidesPerGroup={slidesPerWidth}
+        slidesPerGroup={1}
         loop={true}
         loopFillGroupWithBlank={true}
-        pagination={{
-          clickable: true,
-        }}
         navigation={true}
-        modules={[Pagination, Navigation]}
+        modules={[Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
-        <SwiperSlide key={nanoid()}>{demoImg}</SwiperSlide>
+        {galleryEls}
       </Swiper>
     </Flex>
   );
