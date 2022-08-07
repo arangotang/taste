@@ -47,7 +47,6 @@ const ImageSelector = (props: Props) => {
       opacity={
         photo.urls.full === selectedUrl ||
         !photos.reduce((curBool, curPhoto) => {
-          // store this in a useMemo outside of this
           if (selectedUrl === curPhoto.urls.full) {
             return true;
           }
@@ -102,7 +101,9 @@ const ImageSelector = (props: Props) => {
             <FormHelperText>{`Showing results for "${searchText}"`}</FormHelperText>
           )}
         </FormControl>
-        <Button onClick={handleSearch}>Search</Button>
+        <Button onClick={handleSearch} colorScheme="red">
+          Search
+        </Button>
       </Flex>
       {photos.length > 0 && (
         <Flex m="1rem auto 0 auto" justify="center" gap="1rem" flexWrap="wrap">

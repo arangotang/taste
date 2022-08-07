@@ -28,6 +28,10 @@
   --swiper-theme-color: #1a202c;
 }
 
+.mySwiper {
+  border-radius: 8px;
+}
+
 /* .swiper-button-next,
 .swiper-button-prev {
   z-index: 4;

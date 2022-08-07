@@ -81,13 +81,13 @@ const ItemList = (props: Props) => {
       <SecondaryTitle>{`${titleText}${
         items.length > 1 ? 's' : ''
       }.`}</SecondaryTitle>
-      <Flex flexDir="column" gap="1rem" mt="1rem">
+      <Flex flexDir="column" gap="1rem" mt="1rem" mb="4rem">
         {itemElements}
         <Button
           w="fit-content"
           // alignSelf="center"
           onClick={handleOneMore}
-          // colorScheme="whatsapp"
+          colorScheme="red"
           mb="1rem"
         >
           {`Add ${type === ItemTypes.Ingredient ? 'ingredients' : 'steps'}`}

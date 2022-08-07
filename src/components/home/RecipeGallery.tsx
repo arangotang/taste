@@ -1,4 +1,4 @@
-import { Button, Flex } from '@chakra-ui/react';
+import { Text, Flex, Center } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 
@@ -8,12 +8,13 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './styles.css';
 
-import { Navigation, Pagination } from 'swiper';
+import { Navigation } from 'swiper';
 import { nanoid } from 'nanoid';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import RecipeCard from './RecipeCard';
 import axios from 'axios';
 import { API_URL } from '../../config';
+import { ArrowLeftIcon, ArrowRightIcon } from '@chakra-ui/icons';
 
 const RecipeGallery = () => {
   const [galleryItems, setGalleryItems] = useState([]);
@@ -41,19 +42,35 @@ const RecipeGallery = () => {
   );
 
   return (
-    <Flex m="5rem 1rem 8rem 1rem" userSelect="none">
-      <Swiper
-        slidesPerView={slidesPerWidth}
-        slidesPerGroup={1}
-        loop={true}
-        loopFillGroupWithBlank={true}
-        navigation={true}
-        modules={[Navigation]}
-        className="mySwiper"
-      >
-        {galleryEls}
-      </Swiper>
-    </Flex>
+    <>
+      <Flex m="5rem 1rem 8rem 1rem" userSelect="none">
+        <Swiper
+          slidesPerView={slidesPerWidth}
+          slidesPerGroup={1}
+          loop={true}
+          loopFillGroupWithBlank={true}
+          navigation={slidesPerWidth !== 1}
+          modules={[Navigation]}
+          className="mySwiper"
+        >
+          {galleryEls}
+        </Swiper>
+      </Flex>
+      {slidesPerWidth === 1 && (
+        <Flex
+          color="gray.600"
+          mt="-6rem"
+          mb="6rem"
+          alignItems="center"
+          justify="center"
+          gap="2rem"
+        >
+          <ArrowLeftIcon />
+          <Center as="i">Swipe for recipes</Center>
+          <ArrowRightIcon />
+        </Flex>
+      )}
+    </>
   );
 };
 

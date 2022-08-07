@@ -12,6 +12,7 @@ import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { API_URL } from '../../config';
+import FadeInSection from '../../hooks/FadeInSection';
 import Header from '../header/Header';
 import Description from '../shared/Description';
 import SectionTitle from '../shared/SectionTitle';
@@ -42,6 +43,18 @@ const RecipeInfo = () => {
       })
       .catch((e) => console.error(e));
   }, [params.recipeId]);
+
+  const minutesToHours = (minutes: number): string => {
+    if (minutes < 60) return `${minutes} min${minutes === 1 ? '' : 's'}`;
+    const hours = Math.floor(minutes / 60);
+    const leftoverMins = minutes - hours * 60;
+    if (leftoverMins === 0) {
+      return `${hours} hr${hours === 1 ? '' : 's'}`;
+    }
+    return `${hours} hr${hours === 1 ? '' : 's'} ${leftoverMins} min${
+      leftoverMins === 1 ? '' : 's'
+    }`;
+  };
 
   return (
     <>
@@ -85,28 +98,29 @@ const RecipeInfo = () => {
               {recipeDetails.times.prep > 0 && (
                 <Box textAlign="center">
                   <Text as="b">Prep</Text>
-                  <Text>{recipeDetails.times.prep} mins</Text>
+                  <Text>{minutesToHours(recipeDetails.times.prep)}</Text>
                 </Box>
               )}
               {recipeDetails.times.cook > 0 && (
                 <Box textAlign="center">
                   <Text as="b">Cook</Text>
-                  <Text>{recipeDetails.times.cook} mins</Text>
+                  <Text>{minutesToHours(recipeDetails.times.cook)}</Text>
                 </Box>
               )}
               {recipeDetails.times.chill > 0 && (
                 <Box textAlign="center">
                   <Text as="b">Chill</Text>
-                  <Text>{recipeDetails.times.chill} mins</Text>
+                  <Text>{minutesToHours(recipeDetails.times.chill)}</Text>
                 </Box>
               )}
               <Box textAlign="center">
                 <Text as="b">Total</Text>
                 <Text>
-                  {recipeDetails.times.prep +
-                    recipeDetails.times.cook +
-                    recipeDetails.times.chill}{' '}
-                  mins
+                  {minutesToHours(
+                    recipeDetails.times.prep +
+                      recipeDetails.times.cook +
+                      recipeDetails.times.chill
+                  )}
                 </Text>
               </Box>
               <Box textAlign="center">

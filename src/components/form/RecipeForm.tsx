@@ -14,7 +14,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import Title from '../shared/Title';
-import ItalicDescription from '../shared/ItalicDescription';
 import ItemList, { ItemTypes } from './ItemList';
 import ImageSelector from './ImageSelector';
 import TimeSelector, { TimeTypes } from './TimeSelector';
@@ -158,7 +157,7 @@ const RecipeForm = () => {
               <FormLabel>Description</FormLabel>
             </FormControl>
 
-            <Wrap justify="space-between" mb="2rem">
+            <Wrap justify="space-between" mb="4rem">
               <TimeSelector
                 type={TimeTypes.Prep}
                 value={prepTime}

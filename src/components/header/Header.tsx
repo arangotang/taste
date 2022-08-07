@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Text, Flex, useDisclosure, Collapse } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
-import NavLinks from './NavLinks';
 import { useNavigate } from 'react-router-dom';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 const Header = () => {
+  const width = useWindowDimensions();
+
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true });
 
   const [y, setY] = useState(window.scrollY);
@@ -23,13 +25,15 @@ const Header = () => {
   );
 
   useEffect(() => {
-    setY(window.scrollY);
-    window.addEventListener('scroll', handleNavigation);
+    if (width > 900) {
+      setY(window.scrollY);
+      window.addEventListener('scroll', handleNavigation);
 
-    return () => {
-      window.removeEventListener('scroll', handleNavigation);
-    };
-  }, [handleNavigation]);
+      return () => {
+        window.removeEventListener('scroll', handleNavigation);
+      };
+    }
+  }, [handleNavigation, width]);
 
   let navigate = useNavigate();
 

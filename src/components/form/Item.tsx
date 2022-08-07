@@ -1,3 +1,4 @@
+import { CloseIcon } from '@chakra-ui/icons';
 import {
   FormControl,
   Input,
@@ -41,9 +42,18 @@ const Item = (props: Props) => {
         />
       )}
       <FormLabel>{num}</FormLabel>
-      <Button float="right" onClick={deleteSelf} colorScheme="red">
+      <CloseIcon
+        float="right"
+        onClick={deleteSelf}
+        mt="0.7rem"
+        transition="0.3s"
+        _hover={{ cursor: 'pointer', color: 'red.400' }}
+      >
         Delete
-      </Button>
+      </CloseIcon>
+      {/* <Button float="right" onClick={deleteSelf} colorScheme="red">
+        Delete
+      </Button> */}
     </FormControl>
   );
 };
